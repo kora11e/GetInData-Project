@@ -1,0 +1,154 @@
+{
+    "name": "UpliftModelPipeline",
+    "properties": {
+        "activities": [
+            {
+                "name": "If retrain model",
+                "type": "IfCondition",
+                "dependsOn": [
+                    {
+                        "activity": "set date_load_to",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "set date_load_from",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "ifTrueActivities": [
+                        {
+                            "name": "1a - Create model compute instance",
+                            "type": "ExecutePipeline",
+                            "dependsOn": [],
+                            "policy": {
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "waitOnCompletion": true
+                            }
+                        },
+                        {
+                            "name": "1b - Retrain model",
+                            "type": "ExecutePipeline",
+                            "dependsOn": [
+                                {
+                                    "activity": "1a - Create model compute instance",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "waitOnCompletion": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "set date_load_to",
+                "type": "AppendVariable",
+                "dependsOn": [],
+                "userProperties": []
+            },
+            {
+                "name": "set date_load_from",
+                "type": "AppendVariable",
+                "dependsOn": [],
+                "userProperties": []
+            },
+            {
+                "name": "2 - Load uplift model",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "If retrain model",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "3 - Load uplift master table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "2 - Load uplift model",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "4 - Run uplift model",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "3 - Load uplift master table",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "5 - Generate model performance raport",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "4 - Run uplift model",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            }
+        ],
+        "annotations": []
+    }
+}

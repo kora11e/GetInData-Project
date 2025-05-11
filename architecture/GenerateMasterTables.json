@@ -1,0 +1,111 @@
+{
+    "name": "GenerateMasterTables",
+    "properties": {
+        "activities": [
+            {
+                "name": "1 - Load intermediate tables",
+                "type": "ExecutePipeline",
+                "dependsOn": [
+                    {
+                        "activity": "Set date_load_to",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "Set date_load_from",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "waitOnCompletion": true
+                }
+            },
+            {
+                "name": "Set date_load_to",
+                "type": "AppendVariable",
+                "dependsOn": [],
+                "userProperties": [],
+                "typeProperties": {
+                    "variableName": ""
+                }
+            },
+            {
+                "name": "Set date_load_from",
+                "type": "AppendVariable",
+                "dependsOn": [],
+                "userProperties": [],
+                "typeProperties": {
+                    "variableName": ""
+                }
+            },
+            {
+                "name": "2 - Generate Churn B2B master table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load intermediate tables",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "2 - Generate Churn B2C master table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load intermediate tables",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "2- Generate Uplift master table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load intermediate tables",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            }
+        ],
+        "annotations": []
+    }
+}

@@ -1,0 +1,199 @@
+{
+    "name": "ChurnModelPipeline",
+    "properties": {
+        "activities": [
+            {
+                "name": "If retrain model",
+                "type": "IfCondition",
+                "dependsOn": [
+                    {
+                        "activity": "set date_load_from",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "set date_load_to",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "ifTrueActivities": [
+                        {
+                            "name": "1a - Create model compute instance",
+                            "type": "ExecutePipeline",
+                            "dependsOn": [],
+                            "policy": {
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "waitOnCompletion": true
+                            }
+                        },
+                        {
+                            "name": "1b - Retrain model",
+                            "type": "ExecutePipeline",
+                            "dependsOn": [
+                                {
+                                    "activity": "1a - Create model compute instance",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "waitOnCompletion": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "set date_load_to",
+                "type": "AppendVariable",
+                "dependsOn": [],
+                "userProperties": []
+            },
+            {
+                "name": "set date_load_from",
+                "type": "AppendVariable",
+                "dependsOn": [],
+                "userProperties": []
+            },
+            {
+                "name": "If run B2B model",
+                "type": "IfCondition",
+                "dependsOn": [
+                    {
+                        "activity": "If retrain model",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "ifFalseActivities": [
+                        {
+                            "name": "2 - Load B2C model from registry",
+                            "type": "DatabricksSparkPython",
+                            "dependsOn": [],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": []
+                        },
+                        {
+                            "name": "3 - Load B2C churn master table",
+                            "type": "DatabricksSparkPython",
+                            "dependsOn": [
+                                {
+                                    "activity": "2 - Load B2C model from registry",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": []
+                        }
+                    ],
+                    "ifTrueActivities": [
+                        {
+                            "name": "2 - Load B2B model from registry",
+                            "type": "DatabricksSparkPython",
+                            "dependsOn": [],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": []
+                        },
+                        {
+                            "name": "3 - Load B2B churn master table",
+                            "type": "DatabricksSparkPython",
+                            "dependsOn": [
+                                {
+                                    "activity": "2 - Load B2B model from registry",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "timeout": "0.12:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": []
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "4 - Run churn model",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "If run B2B model",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "5 - Generate model performance raport",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "4 - Run churn model",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            }
+        ],
+        "annotations": []
+    }
+}

@@ -1,0 +1,566 @@
+{
+    "name": "GenerateBaseTables",
+    "properties": {
+        "activities": [
+            {
+                "name": "1 - Load raw data",
+                "type": "ExecutePipeline",
+                "dependsOn": [
+                    {
+                        "activity": "Set date_load_from",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "Set date_load_to",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "waitOnCompletion": true
+                }
+            },
+            {
+                "name": "2 - Clean and normalize account data",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load raw data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "2 - Clean and normalize users data",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load raw data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "2 - Clean and normalize subscriptions data",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load raw data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "2 - Clean and normalize product data",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load raw data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "2 - Clean and normalize usage event data",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load raw data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "2 - Clean and normalize api usage logs",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load raw data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "2 - Clean and normalize support tickets",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load raw data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "2 - Clean and normalize billing invoices",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load raw data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "2 - Clean and normalize payments",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load raw data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "2 - Clean and normalize nps responses",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load raw data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "2 - Clean and normalize user settings",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "1 - Load raw data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "3 - Standardize tables schema",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "2 - Clean and normalize account data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "2 - Clean and normalize users data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "2 - Clean and normalize subscriptions data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "2 - Clean and normalize product data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "2 - Clean and normalize usage event data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "2 - Clean and normalize api usage logs",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "2 - Clean and normalize support tickets",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "2 - Clean and normalize billing invoices",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "2 - Clean and normalize payments",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "2 - Clean and normalize nps responses",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "2 - Clean and normalize user settings",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "4 - Deduplicate tables data",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "3 - Standardize tables schema",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "5 - Write account base table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "4 - Deduplicate tables data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "5 - Write users base table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "4 - Deduplicate tables data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "5 - Write subscriptions base table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "4 - Deduplicate tables data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "5 - Write product base table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "4 - Deduplicate tables data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "5 - Write usage event base table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "4 - Deduplicate tables data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "5 - Write api usage logs base table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "4 - Deduplicate tables data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "5 - Write support tickets base table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "4 - Deduplicate tables data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "5 - Write billing invoices base table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "4 - Deduplicate tables data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "5 - Write payments base table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "4 - Deduplicate tables data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "5 - Write nps responses base table",
+                "type": "DatabricksSparkPython",
+                "dependsOn": [
+                    {
+                        "activity": "4 - Deduplicate tables data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "Set date_load_to",
+                "type": "AppendVariable",
+                "dependsOn": [],
+                "userProperties": []
+            },
+            {
+                "name": "Set date_load_from",
+                "type": "AppendVariable",
+                "dependsOn": [],
+                "userProperties": []
+            }
+        ],
+        "annotations": []
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}
