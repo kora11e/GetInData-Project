@@ -3,10 +3,10 @@ A project for UB classes under GetInData.
 
 Authors: Jan Szczepanek, Maciek Kasztelaniec, Karol Rochalski
 
-##Project Presentation
+## Project Presentation
 [Figma Link](https://www.figma.com/deck/p5sMg4SlGJc1qx74NwdVms/Understanding-Business?node-id=2-622&t=WBx5FUSpSASG6ZAy-1)
 
-#Core Elements
+# Core Elements
 
 ## When Should the Churn Model Be Used?
 B2C = every month ideally around 10 days before renewal (to have time to target such customers, while). Short emotional decisions leave big risks on churn. We need fast rapid scoring to have time to target potential churning customers
